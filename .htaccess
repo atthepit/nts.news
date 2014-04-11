@@ -1,0 +1,34 @@
+php_value upload_max_filesize 500M
+php_value post_max_size 500M
+php_value max_execution_time 600
+php_value max_input_time 600
+php_value safe_mode 0
+php_value memory_limit 256M
+
+Options +FollowSymlinks
+RewriteEngine On
+### IMAGE CACHE SYSTEM ############################
+RewriteCond %{http_host} (.*)nitsnets.com [OR]
+RewriteCond %{http_host} (.*)servidorbeta.com
+
+#RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*)_([0-9]*).(jpg|jpeg|gif|png)$ /application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$7&width=$5&height=$6&$4=1 [L]
+#RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*)_([0-9]*).(jpg|jpeg|gif|png)$ application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$7&width=$5&height=$6&$4=1 [L]
+
+RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*)_([0-9]*).(jpg|jpeg|png)$ /application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$7&width=$5&height=$6&$4=1 [L]
+RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*)_([0-9]*).(jpg|jpeg|png)$ application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$7&width=$5&height=$6&$4=1 [L]
+RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*)_([0-9]*).(gif)$ /uploads/img/$2/$3.$7 [L]
+RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*)_([0-9]*).(gif)$ uploads/img/$2/$3.$7 [L]
+
+RewriteCond %{http_host} (.*)nitsnets.com [OR]
+RewriteCond %{http_host} (.*)servidorbeta.com 
+RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*).(jpg|jpeg|gif|png)$ /application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$6&width=$5&$4=1 [L]
+RewriteRule (.*)uploads/img/(.*)/(.*)_(fill|fillheadcut|crop)_([0-9]*).(jpg|jpeg|gif|png)$ application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$6&width=$5&$4=1 [L]
+RewriteCond %{http_host} (.*)nitsnets.com [OR]
+RewriteCond %{http_host} (.*)servidorbeta.com
+RewriteRule (.*)uploads/img/(.*)/(.*)_([0-9]*)_([0-9]*).(jpg|jpeg|gif|png)$ /application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$6&width=$4&height=$5 [L]
+RewriteRule (.*)uploads/img/(.*)/(.*)_([0-9]*)_([0-9]*).(jpg|jpeg|gif|png)$ application/third_party/image_resize/image.php?image=uploads/img/$2/$3.$6&width=$4&height=$5 [L]
+###################################################
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?$1 [L]  
